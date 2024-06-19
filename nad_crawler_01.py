@@ -1,7 +1,6 @@
 import scrapy
 import re
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 from datetime import datetime
 from urllib.parse import urlparse
 from scrapy.spiders import CrawlSpider, Rule
@@ -10,12 +9,6 @@ from scrapy.linkextractors import LinkExtractor
 
 class CrawlingSpider(CrawlSpider):
     name = "crawler01"
-    #allowed_domains = ["residence.aec.at"]
-    start_urls = ["https://residence.aec.at/lastentry/"]
-    # allowed_domains = ["toscrape.com"]
-    # start_urls = ["http://books.toscrape.com/"]
-    # allowed_domains = ["berliner-zeitung.de"]
-    # start_urls = ["https://www.berliner-zeitung.de/"]
 
     custom_settings = {
         'ROBOTSTXT_OBEY': True,
@@ -38,6 +31,10 @@ class CrawlingSpider(CrawlSpider):
     blocklist = [
         "google.com", "amazon.com", "wikipedia.com"
     ]
+
+    def __init__(self, start_url=None, *args, **kwargs):
+        super(CrawlingSpider, self).__init__(*args, **kwargs)
+        self.start_urls = [start_url]
 
     def parse_item(self, response):
         current_domain = urlparse(response.url).netloc
@@ -72,18 +69,12 @@ class CrawlingSpider(CrawlSpider):
         return has_ads if has_ads else None
 
 if __name__ == "__main__":
-    # Generate a unique filename out of domain and date
-    parsed_url = urlparse(CrawlingSpider.start_urls[0])
-    start_domain = parsed_url.netloc.replace('.', '_')
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"output_{start_domain}_{timestamp}.json"
+    from scrapy.crawler import CrawlerProcess
+
+    import sys
+    start_url = sys.argv[1]
 
     # Create a CrawlerProcess instance with the project settings
-    process = CrawlerProcess(settings={
-        'FEED_FORMAT': 'json',
-        'FEED_URI': output_file,
-    })
-    process.crawl(CrawlingSpider)
+    process = CrawlerProcess()
+    process.crawl(CrawlingSpider, start_url=start_url)
     process.start()
-
-    print(f"Output saved to {output_file}")
