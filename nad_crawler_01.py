@@ -12,7 +12,7 @@ class CrawlingSpider(CrawlSpider):
 
     custom_settings = {
         'ROBOTSTXT_OBEY': True,
-        'DEPTH_LIMIT': 10,
+        'DEPTH_LIMIT': 3,
         'LOG_LEVEL': 'INFO',
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
         'CONCURRENT_REQUESTS': 1,

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraping Results</title>
+</head>
+<body>
+    <h1>Crawling Results</h1>
+    {% if results %}
+    <ul>
+        {% for result in results %}
+        <li>
+            <strong>URL:</strong> {{ result.url }}<br>
+            <strong>Title:</strong> {{ result.title }}<br>
+            <strong>Has Cookies:</strong> {{ result.has_cookies }}<br>
+            <strong>Has Ads:</strong> {{ result.has_ads }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
