@@ -12,7 +12,6 @@ class CrawlingSpider(CrawlSpider):
 
     custom_settings = {
         'ROBOTSTXT_OBEY': True,
-        'DEPTH_LIMIT': 3,
         'LOG_LEVEL': 'INFO',
         'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
         'CONCURRENT_REQUESTS': 1,
@@ -35,6 +34,7 @@ class CrawlingSpider(CrawlSpider):
     def __init__(self, start_url=None, *args, **kwargs):
         super(CrawlingSpider, self).__init__(*args, **kwargs)
         self.start_urls = [start_url]
+        self.custom_settings['DEPTH_LIMIT'] = int(depth_limit)
 
     def parse_item(self, response):
         current_domain = urlparse(response.url).netloc

@@ -13,13 +13,19 @@ def index():
 @nad_crawler_app.route('/start-scraping', methods=['POST'])
 def start_scraping():
     start_url = request.form['start_url']
+    depth_limit = ['depth_limit']
     parsed_url = urlparse(start_url)
     start_domain = parsed_url.netloc.replace('.', '_')
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = f"output_{start_domain}_{timestamp}.json"
 
     # Run the Scrapy spider
-    subprocess.run(["scrapy", "crawl", "crawler01", "-a", f"start_url={start_url}", "-o", output_file])
+    subprocess.run(
+        ["scrapy", "crawl", "crawler01",
+         "-a", f"start_url={start_url}",
+         "-a", f"depth_limit={depth_limit}",
+         "-o", output_file
+         ])
 
     return redirect(url_for('show_results', output_file=output_file))
 
