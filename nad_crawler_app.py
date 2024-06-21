@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, redirect, url_for
 import subprocess
 from urllib.parse import urlparse
 from datetime import datetime
+import os
+import time
 import json
 
 nad_crawler_app = Flask(__name__)
@@ -26,6 +28,14 @@ def start_scraping():
          "-a", f"depth_limit={depth_limit}",
          "-o", output_file
          ])
+
+    wait_time = 0
+    while not os.path.exists(output_file) and wait_time < 30:
+        time.sleep(1)
+        wait_time += 1
+
+    if not os.path.exists(output_file):
+        return "Error: Output file not created."
 
     return redirect(url_for('show_results', output_file=output_file))
 
