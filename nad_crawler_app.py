@@ -15,7 +15,7 @@ def index():
 @nad_crawler_app.route('/start-scraping', methods=['POST'])
 def start_scraping():
     start_url = request.form['start_url']
-    depth_limit = ['depth_limit']
+    depth_limit = request.form['depth_limit']
     parsed_url = urlparse(start_url)
     start_domain = parsed_url.netloc.replace('.', '_')
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

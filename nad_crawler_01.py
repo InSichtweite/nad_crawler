@@ -31,7 +31,7 @@ class CrawlingSpider(CrawlSpider):
         "google.com", "amazon.com", "wikipedia.com"
     ]
 
-    def __init__(self, start_url=None, *args, **kwargs):
+    def __init__(self, start_url=None, depth_limit=3, *args, **kwargs):
         super(CrawlingSpider, self).__init__(*args, **kwargs)
         self.start_urls = [start_url]
         self.custom_settings['DEPTH_LIMIT'] = int(depth_limit)
@@ -70,11 +70,12 @@ class CrawlingSpider(CrawlSpider):
 
 if __name__ == "__main__":
     from scrapy.crawler import CrawlerProcess
-
     import sys
+
     start_url = sys.argv[1]
+    depth_limit = sys.argv[2]
 
     # Create a CrawlerProcess instance with the project settings
     process = CrawlerProcess()
-    process.crawl(CrawlingSpider, start_url=start_url)
+    process.crawl(CrawlingSpider, start_url=start_url, depth_limit=depth_limit)
     process.start()
