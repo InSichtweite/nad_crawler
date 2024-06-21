@@ -5,6 +5,8 @@ from datetime import datetime
 import os
 import time
 import json
+import signal
+import sys
 
 nad_crawler_app = Flask(__name__)
 
@@ -45,6 +47,7 @@ def show_results():
     with open(output_file, 'r') as f:
         results = json.load(f)
     return render_template('results.html', results=results)
+
 
 if __name__ == '__main__':
     nad_crawler_app.run(debug=True)

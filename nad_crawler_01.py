@@ -38,6 +38,7 @@ class CrawlingSpider(CrawlSpider):
 
     def parse_item(self, response):
         current_domain = urlparse(response.url).netloc
+        current_depth = response.meta.get('depth', 0)
 
         # Check if the domain is in the blocklist
         if any(blocked_domain in current_domain for blocked_domain in self.blocklist):
@@ -55,6 +56,7 @@ class CrawlingSpider(CrawlSpider):
             yield {
                 "url": response.url,
                 "title": response.css('title::text').get(),
+                "depth": current_depth,
                 "has cookies": has_cookies,
                 "has ads": bool(has_ads)
             }
