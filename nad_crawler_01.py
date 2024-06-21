@@ -60,6 +60,10 @@ class CrawlingSpider(CrawlSpider):
                 "has cookies": has_cookies,
                 "has ads": bool(has_ads)
             }
+        # Follow links if within depth limit
+        if current_depth < self.depth_limit:
+            for link in LinkExtractor().extract_links(response):
+                yield scrapy.Request(link.url, callback=self.parse_item, meta={'depth': current_depth + 1})
 
     def check_for_ads(self, response):
         has_ads = []
