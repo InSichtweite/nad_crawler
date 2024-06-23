@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nad crawler</title>
+    <style>
+        /* Styles for the loading overlay */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            text-align: center;
+            padding-top: 20%;
+        }
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <h1>Start crawling</h1>
@@ -16,5 +43,16 @@
         <br>
         <button type="submit">Start</button>
     </form>
+
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Scraping in progress, please wait...</p>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loading-overlay').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
