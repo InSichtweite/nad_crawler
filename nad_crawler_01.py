@@ -34,7 +34,7 @@ class CrawlingSpider(CrawlSpider):
     def __init__(self, start_url=None, depth_limit=3, *args, **kwargs):
         super(CrawlingSpider, self).__init__(*args, **kwargs)
         self.start_urls = [start_url]
-        self.custom_settings['DEPTH_LIMIT'] = int(depth_limit)
+        self.depth_limit = int(depth_limit)
 
     def parse_item(self, response):
         current_domain = urlparse(response.url).netloc
