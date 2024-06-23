@@ -34,7 +34,7 @@
 </head>
 <body>
     <h1>Start crawling</h1>
-    <form action="{{ url_for('start_scraping') }}" method="post">
+    <form action="{{ url_for('start_scraping') }}" method="post" onsubmit="showLoading()">
         <label for="start_url">Start URL:</label>
         <input type="text" id="start_url" name="start_url" required>
         <br>
@@ -46,7 +46,7 @@
 
     <div id="loading-overlay">
         <div class="spinner"></div>
-        <p>Scraping in progress, please wait...</p>
+        <p>Crawling in progress, please wait...</p>
     </div>
 
     <script>
